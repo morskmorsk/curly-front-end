@@ -17,12 +17,12 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/products/`);
   }
 
-  getCart(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/carts/`);
-  }
-
   addToCart(productId: number, quantity: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/carts/add_item/`, { product_id: productId, quantity });
+  }
+
+  getCart(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/carts/`);
   }
 
   checkout(): Observable<any> {

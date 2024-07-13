@@ -1,5 +1,13 @@
 <!-- src/app/components/checkout/checkout.component.html -->
 
-<h2>Checkout</h2>
-<p>Ready to complete your purchase?</p>
-<button mat-raised-button color="primary" (click)="checkout()">Complete Order</button>
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Checkout</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Ready to complete your purchase?</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="checkout()">Complete Order</button>
+    </mat-card-actions>
+  </mat-card>

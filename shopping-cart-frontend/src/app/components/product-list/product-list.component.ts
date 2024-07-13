@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-list',
@@ -15,7 +16,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private snackBar: MatSnackBar
   ) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -45,6 +47,7 @@ export class ProductListComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching products', error);
+        this.snackBar.open('Error loading products', 'Close', { duration: 3000 });
       }
     );
   }
@@ -53,9 +56,11 @@ export class ProductListComponent implements OnInit {
     this.apiService.addToCart(productId, 1).subscribe(
       (response) => {
         console.log('Product added to cart', response);
+        this.snackBar.open('Product added to cart', 'Close', { duration: 2000 });
       },
       (error) => {
         console.error('Error adding product to cart', error);
+        this.snackBar.open('Error adding product to cart', 'Close', { duration: 3000 });
       }
     );
   }
