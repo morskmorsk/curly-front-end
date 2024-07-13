@@ -1,0 +1,28 @@
+<!-- src/app/components/auth/auth.component.html -->
+
+<div class="auth-container">
+  <mat-card>
+    <mat-card-title>{{ isLoginMode ? 'Login' : 'Sign Up' }}</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit(authForm)" #authForm="ngForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" ngModel name="username" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" ngModel name="password" required minlength="6">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!authForm.form.valid">
+          {{ isLoginMode ? 'Login' : 'Sign Up' }}
+        </button>
+      </form>
+      <mat-error *ngIf="error">{{ error }}</mat-error>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="onSwitchMode()">
+        Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
