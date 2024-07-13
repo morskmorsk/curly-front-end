@@ -60,7 +60,10 @@ export class ProductListComponent implements OnInit {
       },
       (error) => {
         console.error('Error adding product to cart', error);
-        this.snackBar.open('Error adding product to cart', 'Close', { duration: 3000 });
+        console.error('Error details:', error.error);
+        console.error('Status:', error.status);
+        console.error('Status Text:', error.statusText);
+        this.snackBar.open(`Error adding product to cart: ${error.error.detail || error.message}`, 'Close', { duration: 3000 });
       }
     );
   }

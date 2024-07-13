@@ -2,6 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cart',
@@ -9,9 +10,12 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartItems: any[] = [];
+  cart: any = null;
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.loadCart();
@@ -20,10 +24,24 @@ export class CartComponent implements OnInit {
   loadCart(): void {
     this.apiService.getCart().subscribe(
       (data) => {
-        this.cartItems = data.items;
+        this.cart = data;
       },
       (error) => {
         console.error('Error fetching cart', error);
+        this.snackBar.open('Error loading cart', 'Close', { duration: 3000 });
+      }
+    );
+  }
+
+  removeItem(itemId: number): void {
+    this.apiService.removeFromCart(itemId).subscribe(
+      () => {
+        this.loadCart();
+        this.snackBar.open('Item removed from cart', 'Close', { duration: 2000 });
+      },
+      (error) => {
+        console.error('Error removing item from cart', error);
+        this.snackBar.open('Error removing item from cart', 'Close', { duration: 3000 });
       }
     );
   }
