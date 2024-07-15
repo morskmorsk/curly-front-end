@@ -4,6 +4,16 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+interface Product {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+}
 
 @Component({
   selector: 'app-product-list',
@@ -11,29 +21,35 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: any[] = [];
-  cols: number = 3;
+  products: Product[] = [];
+  gridColumns$: Observable<number>;
+  isLoading = true;
+  error: string | null = null;
 
   constructor(
     private apiService: ApiService,
     private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar
   ) {
-    this.breakpointObserver.observe([
+    this.gridColumns$ = this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
       Breakpoints.Medium,
       Breakpoints.Large,
       Breakpoints.XLarge
-    ]).subscribe(result => {
-      if (result.breakpoints[Breakpoints.XSmall]) {
-        this.cols = 1;
-      } else if (result.breakpoints[Breakpoints.Small]) {
-        this.cols = 2;
-      } else {
-        this.cols = 3;
-      }
-    });
+    ]).pipe(
+      map(result => {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          return 1;
+        } else if (result.breakpoints[Breakpoints.Small]) {
+          return 2;
+        } else if (result.breakpoints[Breakpoints.Medium]) {
+          return 3;
+        } else {
+          return 4;
+        }
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -41,12 +57,17 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.isLoading = true;
+    this.error = null;
     this.apiService.getProducts().subscribe(
-      (data) => {
+      data => {
         this.products = data.results;
+        this.isLoading = false;
       },
-      (error) => {
+      error => {
         console.error('Error fetching products', error);
+        this.error = 'Error loading products. Please try again later.';
+        this.isLoading = false;
         this.snackBar.open('Error loading products', 'Close', { duration: 3000 });
       }
     );
@@ -54,16 +75,13 @@ export class ProductListComponent implements OnInit {
 
   addToCart(productId: number): void {
     this.apiService.addToCart(productId, 1).subscribe(
-      (response) => {
+      response => {
         console.log('Product added to cart', response);
         this.snackBar.open('Product added to cart', 'Close', { duration: 2000 });
       },
-      (error) => {
+      error => {
         console.error('Error adding product to cart', error);
-        console.error('Error details:', error.error);
-        console.error('Status:', error.status);
-        console.error('Status Text:', error.statusText);
-        this.snackBar.open(`Error adding product to cart: ${error.error.detail || error.message}`, 'Close', { duration: 3000 });
+        this.snackBar.open('Error adding product to cart', 'Close', { duration: 3000 });
       }
     );
   }

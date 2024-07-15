@@ -23,10 +23,10 @@ export class CartComponent implements OnInit {
 
   loadCart(): void {
     this.apiService.getCart().subscribe(
-      (data) => {
+      (data: any) => {
         this.cart = data;
       },
-      (error) => {
+      (error: any) => {
         console.error('Error fetching cart', error);
         this.snackBar.open('Error loading cart', 'Close', { duration: 3000 });
       }
@@ -39,7 +39,7 @@ export class CartComponent implements OnInit {
         this.loadCart();
         this.snackBar.open('Item removed from cart', 'Close', { duration: 2000 });
       },
-      (error) => {
+      (error: any) => {
         console.error('Error removing item from cart', error);
         this.snackBar.open('Error removing item from cart', 'Close', { duration: 3000 });
       }

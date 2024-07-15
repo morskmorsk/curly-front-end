@@ -1,19 +1,29 @@
 <!-- src/app/components/product-list/product-list.component.html -->
 
-<h2>Products</h2>
-<mat-grid-list [cols]="cols" rowHeight="350px">
-  <mat-grid-tile *ngFor="let product of products">
-    <mat-card class="product-card">
+<div class="product-list-container">
+  <h2>Products</h2>
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="product-grid" [style.grid-template-columns]="'repeat(' + (gridColumns$ | async) + ', 1fr)'">
+    <mat-card *ngFor="let product of products" class="product-card">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
       </mat-card-header>
+      <img mat-card-image [src]="product.image || 'assets/placeholder-image.jpg'" alt="{{ product.name }}">
       <mat-card-content>
-        <p>Price: {{ product.price | currency }}</p>
-        <p>{{ product.description }}</p>
+        <p class="product-price">{{ product.price | currency }}</p>
+        <p class="product-description">{{ product.description }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="accent" (click)="addToCart(product.id)">Add to Cart</button>
+        <button mat-raised-button color="primary" (click)="addToCart(product.id)">Add to Cart</button>
       </mat-card-actions>
     </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>

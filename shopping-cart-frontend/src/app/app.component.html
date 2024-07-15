@@ -9,7 +9,17 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/products">Products</a>
       <a mat-list-item routerLink="/cart">Cart</a>
-      <a mat-list-item (click)="logout()" *ngIf="currentUser">Logout</a>
+      <ng-container *ngIf="isAdmin">
+        <a mat-list-item routerLink="/add-location">Add Location</a>
+        <a mat-list-item routerLink="/add-department">Add Department</a>
+        <a mat-list-item routerLink="/add-product">Add Product</a>
+      </ng-container>
+      <ng-container *ngIf="currentUser; else loginLink">
+        <!-- The logout link here is removed to avoid redundancy -->
+      </ng-container>
+      <ng-template #loginLink>
+        <a mat-list-item routerLink="/auth">Login</a>
+      </ng-template>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,7 +34,13 @@
       </button>
       <span>Shopping Cart App</span>
       <span class="spacer"></span>
-      <span *ngIf="currentUser">Welcome, {{ currentUser.username }}!</span>
+      <ng-container *ngIf="currentUser; else loginButton">
+        <span>Welcome, {{ currentUser.username }}!</span>
+        <button mat-button (click)="logout()">Logout</button>
+      </ng-container>
+      <ng-template #loginButton>
+        <button mat-button routerLink="/auth">Login</button>
+      </ng-template>
     </mat-toolbar>
     <div class="content-container">
       <router-outlet></router-outlet>

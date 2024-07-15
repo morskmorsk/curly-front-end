@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  currentUser: any;
+  currentUser: any = null;
+  isAdmin: boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -29,7 +30,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.currentUser.subscribe(user => {
+      console.log('Current User:', user); // Debugging log
       this.currentUser = user;
+      this.isAdmin = user?.is_staff || false;
+      console.log('Is Admin:', this.isAdmin); // Debugging log
     });
   }
 

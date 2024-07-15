@@ -22,18 +22,21 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-// src/app/services/auth.service.ts
-
   login(username: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/token/`, { username, password })
       .pipe(map(response => {
-        const user = { username, ...response };
+        const user = {
+          username: response.username,
+          is_staff: response.is_staff,
+          refresh: response.refresh,
+          access: response.access
+        };
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
       }));
   }
-  
+
   signup(username: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/register/`, { username, password })
       .pipe(map(response => {
