@@ -1,52 +1,22 @@
 /* src/app/components/cart/cart.component.css */
 
 .cart-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .cart-item {
-    margin-bottom: 10px;
-  }
-  
-  .item-name {
-    font-weight: bold;
-  }
-  
-  .item-details {
-    display: flex;
-    justify-content: space-between;
-    color: #666;
-    font-size: 0.9em;
-  }
-  
-  .cart-total {
-    text-align: right;
-    font-size: 1.2em;
-    margin: 20px 0;
-  }
-  
-  .cart-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .empty-cart {
-    text-align: center;
-    padding: 40px;
-  }
-  
-  .loading-spinner {
-    margin: 40px auto;
-  }
-  
-  mat-divider {
-    margin: 20px 0;
-  }
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.cart-total {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+}

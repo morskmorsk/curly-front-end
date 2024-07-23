@@ -1,19 +1,13 @@
 /* src/app/components/product-list/product-list.component.css */
 
-:root {
-  --padding-large: 20px;
-  --padding-small: 10px;
-  --gap-large: 20px;
-  --gap-small: 10px;
-}
-
 .product-list-container {
-  padding: var(--padding-large);
+  padding: 20px;
 }
 
 .product-grid {
   display: grid;
-  gap: var(--gap-large);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .product-card {
@@ -62,15 +56,15 @@
 .error-message {
   color: #f44336;
   text-align: center;
-  padding: var(--padding-large);
+  padding: 20px;
 }
 
 @media (max-width: 599px) {
   .product-list-container {
-    padding: var(--padding-small);
+    padding: 10px;
   }
   
   .product-grid {
-    gap: var(--gap-small);
+    gap: 10px;
   }
 }

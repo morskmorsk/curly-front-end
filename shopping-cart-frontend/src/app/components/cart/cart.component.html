@@ -1,37 +1,40 @@
 <!-- src/app/components/cart/cart.component.html -->
 
 <div class="cart-container">
-  <h2>Your Shopping Cart</h2>
-  <ng-container *ngIf="cart">
-    <mat-card *ngIf="cart.items && cart.items.length > 0">
-      <mat-list>
-        <mat-list-item *ngFor="let item of cart.items" class="cart-item">
-          <div mat-line class="item-name">{{ item.product.name }}</div>
-          <div mat-line class="item-details">
-            <span>Quantity: {{ item.quantity }}</span>
-            <span>Price: {{ item.product.price | currency }}</span>
-            <span>Subtotal: {{ item.total_price | currency }}</span>
-          </div>
-          <button mat-icon-button color="warn" (click)="removeItem(item.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
-      <mat-divider></mat-divider>
-      <div class="cart-total">
-        <strong>Total: {{ cart.total | currency }}</strong>
-      </div>
-      <div class="cart-actions">
-        <button mat-raised-button color="primary" routerLink="/checkout">Proceed to Checkout</button>
-        <button mat-raised-button color="accent" routerLink="/products">Continue Shopping</button>
-      </div>
-    </mat-card>
-    <mat-card *ngIf="!cart.items || cart.items.length === 0" class="empty-cart">
-      <mat-card-content>
-        <p>Your cart is empty.</p>
-        <button mat-raised-button color="primary" routerLink="/products">Start Shopping</button>
-      </mat-card-content>
-    </mat-card>
-  </ng-container>
-  <mat-spinner *ngIf="!cart" diameter="50" class="loading-spinner"></mat-spinner>
+  <h2>Your Cart</h2>
+
+  <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+    <!-- Product Name Column -->
+    <ng-container matColumnDef="productName">
+      <th mat-header-cell *matHeaderCellDef> Product Name </th>
+      <td mat-cell *matCellDef="let item"> {{ item.productName }} </td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let item"> {{ item.quantity }} </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let item"> {{ item.price | currency }} </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let item"> {{ item.price * item.quantity | currency }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="cart-total">
+    <span>Total: {{ cartTotal | currency }}</span>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="checkout()">Checkout</button>
 </div>

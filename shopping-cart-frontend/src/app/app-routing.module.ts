@@ -7,7 +7,6 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
-
 import { AddLocationComponent } from './components/add-location/add-location.component';
 import { AddDepartmentComponent } from './components/add-department/add-department.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
