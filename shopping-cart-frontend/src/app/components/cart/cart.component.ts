@@ -15,7 +15,7 @@ interface CartItem {
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
-  displayedColumns: string[] = ['productName', 'quantity', 'price', 'total'];
+  displayedColumns: string[] = ['productName', 'quantity', 'price', 'subtotal', 'tax', 'total'];
   cartTotal = 0;
 
   constructor(
@@ -27,9 +27,22 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
+  // loadCart(): void {
+  //   this.apiService.getCart().subscribe(
+  //     (data: any) => {
+  //       this.cartItems = data.items;
+  //       this.calculateCartTotal();
+  //     },
+  //     (error: any) => {
+  //       console.error('Error fetching cart', error);
+  //       this.snackBar.open('Error loading cart', 'Close', { duration: 3000 });
+  //     }
+  //   );
+  // }
   loadCart(): void {
     this.apiService.getCart().subscribe(
       (data: any) => {
+        console.log(data); // Log the API response
         this.cartItems = data.items;
         this.calculateCartTotal();
       },
@@ -40,8 +53,17 @@ export class CartComponent implements OnInit {
     );
   }
 
+  calculateTotal(item: any): number {
+    const subtotal = parseFloat(item.subtotal) || 0; // Ensure it's a number
+    const tax = parseFloat(item.tax) || 0; // Ensure it's a number
+    return subtotal + tax;
+  }
+
   calculateCartTotal(): void {
-    this.cartTotal = this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    this.cartTotal = this.cartItems.reduce((total, item) => {
+      return total + this.calculateTotal(item);
+    }
+    , 0);
   }
 
   removeItem(itemId: number): void {
