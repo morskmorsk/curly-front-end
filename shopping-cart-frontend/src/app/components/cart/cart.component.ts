@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { PriceOverrideDialogComponent } from '../price-override-dialog/price-override-dialog.component';
 
 interface CartItem {
   productName: string;
@@ -20,25 +22,14 @@ export class CartComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.loadCart();
   }
 
-  // loadCart(): void {
-  //   this.apiService.getCart().subscribe(
-  //     (data: any) => {
-  //       this.cartItems = data.items;
-  //       this.calculateCartTotal();
-  //     },
-  //     (error: any) => {
-  //       console.error('Error fetching cart', error);
-  //       this.snackBar.open('Error loading cart', 'Close', { duration: 3000 });
-  //     }
-  //   );
-  // }
   loadCart(): void {
     this.apiService.getCart().subscribe(
       (data: any) => {
@@ -89,6 +80,33 @@ export class CartComponent implements OnInit {
       (error) => {
         console.error('Error during checkout', error);
         this.snackBar.open('Error during checkout', 'Close', { duration: 3000 });
+      }
+    );
+  }
+
+  openPriceOverrideDialog(item: any): void {
+    const dialogRef = this.dialog.open(PriceOverrideDialogComponent, {
+      width: '250px',
+      data: {currentPrice: item.effective_price}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updatePriceOverride(item.id, result);
+      }
+    });
+  }
+
+  updatePriceOverride(itemId: number, overridePrice: number): void {
+    this.apiService.updatePriceOverride(itemId, overridePrice).subscribe(
+      (data: any) => {
+        this.cartItems = data.items;
+        this.calculateCartTotal();
+        this.snackBar.open('Price updated successfully', 'Close', { duration: 2000 });
+      },
+      (error: any) => {
+        console.error('Error updating price', error);
+        this.snackBar.open('Error updating price', 'Close', { duration: 3000 });
       }
     );
   }

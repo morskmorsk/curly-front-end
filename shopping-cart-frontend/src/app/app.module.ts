@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { PriceOverrideDialogComponent } from './components/price-override-dialog/price-override-dialog.component';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +38,7 @@ import { MatSpinner } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     AppComponent,
+    PriceOverrideDialogComponent,
     AuthComponent,
     ProductListComponent,
     CartComponent,
@@ -65,6 +70,7 @@ import { MatSpinner } from '@angular/material/progress-spinner';
     MatGridListModule, // Add this
     MatTableModule,
     MatSpinner,
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

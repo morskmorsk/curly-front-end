@@ -50,4 +50,8 @@ export class ApiService {
   addProduct(productData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products/`, productData);
   }
+
+  updatePriceOverride(itemId: number, overridePrice: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/carts/update_price_override/`, { item_id: itemId, override_price: overridePrice });
+  }
 }
