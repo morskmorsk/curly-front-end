@@ -5,6 +5,8 @@ import { ApiService } from '../../services/api.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PriceOverrideDialogComponent } from '../price-override-dialog/price-override-dialog.component'; // Import the dialog component
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +23,8 @@ export class ProductListComponent implements OnInit {
     private apiService: ApiService,
     private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog, // Add MatDialog to the constructor
   ) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -65,17 +68,53 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  addToCart(productId: number): void {
-    this.apiService.addToCart(productId, 1).subscribe(
-      (response) => {
-        console.log('Product added to cart', response);
-        this.snackBar.open('Product added to cart', 'Close', { duration: 2000 });
-        this.router.navigate(['/cart']); // Navigate to the cart page
-      },
-      (error) => {
-        console.error('Error adding product to cart', error);
-        this.snackBar.open('Error adding product to cart', 'Close', { duration: 3000 });
+  // addToCart(productId: number): void {
+  //   this.apiService.addToCart(productId, 1).subscribe(
+  //     (response) => {
+  //       console.log('Product added to cart', response);
+  //       this.snackBar.open('Product added to cart', 'Close', { duration: 2000 });
+  //       this.router.navigate(['/cart']); // Navigate to the cart page
+  //     },
+  //     (error) => {
+  //       console.error('Error adding product to cart', error);
+  //       this.snackBar.open('Error adding product to cart', 'Close', { duration: 3000 });
+  //     }
+  //   );
+  // }
+  // addToCart(productId: number) {
+  //   // Open the price override dialog
+  //   const dialogRef = this.dialog.open(PriceOverrideDialogComponent, {
+  //     width: '300px',
+  //     data: { productId: productId }
+  //   });
+
+  //   // After the dialog is closed
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       // If the user provided an override price or confirmed the action
+  //       this.apiService.addToCart(productId, result.overridePrice).subscribe(() => {
+  //         // Navigate to the cart page after the item is added
+  //         this.router.navigate(['/cart']);
+  //       });
+  //     }
+  //   });
+  // }
+  addToCart(productId: number) {
+    const dialogRef = this.dialog.open(PriceOverrideDialogComponent, {
+      width: '300px',
+      data: { productId: productId }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Ensure both quantity and overridePrice are handled
+        const overridePrice = result.overridePrice ? result.overridePrice : null;
+  
+        // Add to cart service, sending quantity as 1 by default and passing the override price
+        this.apiService.addToCart(productId, 1, overridePrice).subscribe(() => {
+          this.router.navigate(['/cart']);
+        });
       }
-    );
+    });
   }
 }

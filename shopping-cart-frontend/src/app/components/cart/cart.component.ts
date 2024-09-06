@@ -84,30 +84,30 @@ export class CartComponent implements OnInit {
     );
   }
 
-  openPriceOverrideDialog(item: any): void {
-    const dialogRef = this.dialog.open(PriceOverrideDialogComponent, {
-      width: '250px',
-      data: {currentPrice: item.effective_price}
-    });
+  // openPriceOverrideDialog(item: any): void {
+  //   const dialogRef = this.dialog.open(PriceOverrideDialogComponent, {
+  //     width: '250px',
+  //     data: {currentPrice: item.effective_price}
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.updatePriceOverride(item.id, result);
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.updatePriceOverride(item.id, result);
+  //     }
+  //   });
+  // }
 
-  updatePriceOverride(itemId: number, overridePrice: number): void {
-    this.apiService.updatePriceOverride(itemId, overridePrice).subscribe(
-      (data: any) => {
-        this.cartItems = data.items;
-        this.calculateCartTotal();
-        this.snackBar.open('Price updated successfully', 'Close', { duration: 2000 });
-      },
-      (error: any) => {
-        console.error('Error updating price', error);
-        this.snackBar.open('Error updating price', 'Close', { duration: 3000 });
-      }
-    );
-  }
+  // updatePriceOverride(itemId: number, overridePrice: number): void {
+  //   this.apiService.updatePriceOverride(itemId, overridePrice).subscribe(
+  //     (data: any) => {
+  //       this.cartItems = data.items;
+  //       this.calculateCartTotal();
+  //       this.snackBar.open('Price updated successfully', 'Close', { duration: 2000 });
+  //     },
+  //     (error: any) => {
+  //       console.error('Error updating price', error);
+  //       this.snackBar.open('Error updating price', 'Close', { duration: 3000 });
+  //     }
+  //   );
+  // }
 }

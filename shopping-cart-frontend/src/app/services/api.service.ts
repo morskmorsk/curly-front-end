@@ -15,8 +15,13 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/products/`);
   }
 
-  addToCart(productId: number, quantity: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/carts/add_item/`, { product_id: productId, quantity });
+  addToCart(productId: number, quantity: number, overridePrice: number | null): Observable<any> {
+    const body = {
+      product_id: productId,
+      quantity: quantity,
+      override_price: overridePrice
+    };
+    return this.http.post(`${this.apiUrl}/carts/add_item/`, body);
   }
 
   getCart(): Observable<any> {
