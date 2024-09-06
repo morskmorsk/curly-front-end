@@ -17,7 +17,7 @@ interface CartItem {
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
-  displayedColumns: string[] = ['productName', 'quantity', 'price', 'subtotal', 'tax', 'total'];
+  displayedColumns: string[] = ['productName', 'quantity', 'price', 'subtotal', 'tax', 'total', 'remove'];
   cartTotal = 0;
 
   constructor(
@@ -57,8 +57,8 @@ export class CartComponent implements OnInit {
     , 0);
   }
 
-  removeItem(itemId: number): void {
-    this.apiService.removeFromCart(itemId).subscribe(
+  removeItem(item: any): void {
+    this.apiService.removeFromCart(item.id).subscribe(
       () => {
         this.loadCart();
         this.snackBar.open('Item removed from cart', 'Close', { duration: 2000 });
