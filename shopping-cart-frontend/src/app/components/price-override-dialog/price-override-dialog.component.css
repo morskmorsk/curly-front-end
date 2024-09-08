@@ -1,0 +1,72 @@
+/* src/app/components/price-override-dialog/price-override-dialog.component.css */
+
+.dialog-title {
+    font-size: 2em;  /* Increased title size */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;  /* Added more space below the title */
+    color: #333;
+  }
+  
+  .dialog-content {
+    padding: 30px;  /* Increased padding for more space around the content */
+  }
+  
+  .form-field {
+    width: 100%;
+    margin-bottom: 30px;  /* Increased margin below the form field */
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .mat-dialog-content input {
+    font-size: 1.3em;  /* Increased font size for input */
+    padding: 12px;     /* Added more padding for a larger input field */
+  }
+  
+  .dialog-actions {
+    padding: 20px 0;  /* Increased padding around the actions */
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cancel-button {
+    color: #f44336;
+    font-weight: bold;
+    font-size: 1.2em;  /* Slightly larger font for cancel button */
+    text-transform: uppercase;
+  }
+  
+  .confirm-button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;  /* Slightly larger font for confirm button */
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+  }
+  
+  .confirm-button mat-icon {
+    margin-right: 10px;  /* Added more space between the icon and text */
+  }
+  
+  .confirm-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  @media (max-width: 599px) {
+    .dialog-content {
+      padding: 15px;  /* Smaller padding for mobile */
+    }
+  
+    .dialog-title {
+      font-size: 1.7em;  /* Adjusted title size for smaller screens */
+    }
+  
+    .confirm-button {
+      font-size: 1.1em;  /* Adjusted button size for smaller screens */
+    }
+  }

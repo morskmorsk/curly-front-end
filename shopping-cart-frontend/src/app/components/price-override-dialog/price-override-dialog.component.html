@@ -1,13 +1,17 @@
-<h2 mat-dialog-title>Set Price Override</h2>
+<!-- src/app/components/price-override-dialog/price-override-dialog.component.html -->
 
-<mat-dialog-content>
-  <mat-form-field appearance="fill">
+<h2 mat-dialog-title class="dialog-title">Set Price Override</h2>
+
+<mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Override Price</mat-label>
     <input matInput type="number" [(ngModel)]="overridePrice" placeholder="Enter a custom price">
   </mat-form-field>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()">Confirm</button>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="onCancel()" class="cancel-button">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onConfirm()" class="confirm-button">
+    <mat-icon>check_circle</mat-icon> Confirm
+  </button>
 </mat-dialog-actions>

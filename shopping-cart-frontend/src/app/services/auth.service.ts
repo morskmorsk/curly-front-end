@@ -22,8 +22,46 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  getCsrfToken(): string | null {
+    const name = 'csrftoken=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.indexOf(name) === 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
+    return null;
+  }
+
+  // login(username: string, password: string) {
+  //   return this.http.post<any>(`${environment.apiUrl}/token/`, { username, password })
+  //     .pipe(map(response => {
+  //       const user = {
+  //         username: response.username,
+  //         is_staff: response.is_staff,
+  //         refresh: response.refresh,
+  //         access: response.access
+  //       };
+  //       localStorage.setItem('currentUser', JSON.stringify(user));
+  //       this.currentUserSubject.next(user);
+  //       return user;
+  //     }));
+  // }
+
+  // signup(username: string, password: string) {
+  //   return this.http.post<any>(`${environment.apiUrl}/register/`, { username, password })
+  //     .pipe(map(response => {
+  //       return response;
+  //     }));
+  // }
+
   login(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/token/`, { username, password })
+    const csrfToken = this.getCsrfToken();
+    const headers = { 'X-CSRFToken': csrfToken || '' };
+  
+    return this.http.post<any>(`${environment.apiUrl}/token/`, { username, password }, { headers })
       .pipe(map(response => {
         const user = {
           username: response.username,
@@ -36,9 +74,12 @@ export class AuthService {
         return user;
       }));
   }
-
+  
   signup(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/register/`, { username, password })
+    const csrfToken = this.getCsrfToken();
+    const headers = { 'X-CSRFToken': csrfToken || '' };
+  
+    return this.http.post<any>(`${environment.apiUrl}/register/`, { username, password }, { headers })
       .pipe(map(response => {
         return response;
       }));
