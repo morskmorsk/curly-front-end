@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Payment Success</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="paymentMethod === 'cash'">Payment made with cash. Change due: {{ changeDue | currency }}</p>
+      <p *ngIf="paymentMethod === 'creditCard'">Payment made by credit card.</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/products">Continue Shopping</button>
+    </mat-card-actions>
+  </mat-card>

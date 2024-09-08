@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Payment Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #paymentForm="ngForm">
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Payment Method</mat-label>
+          <mat-select [(ngModel)]="paymentMethod" name="paymentMethod" required>
+            <mat-option value="creditCard">Credit Card (External Terminal)</mat-option>
+            <mat-option value="cash">Cash</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!-- Credit Card Payment Section (External Terminal) -->
+        <div *ngIf="paymentMethod === 'creditCard'">
+          <p>Proceed to process the payment on the external terminal.</p>
+        </div>
+  
+        <!-- Cash Payment Section -->
+        <div *ngIf="paymentMethod === 'cash'">
+          <mat-form-field appearance="fill">
+            <mat-label>Tendered Amount</mat-label>
+            <input matInput type="number" placeholder="Enter tendered amount" [(ngModel)]="cashPayment.tendered" name="tendered" required>
+          </mat-form-field>
+  
+          <p *ngIf="cashPayment.tendered && totalAmount">Change Due: {{ calculateChange() | currency }}</p>
+        </div>
+  
+        <div class="total-amount">
+          <p>Total Amount: {{ totalAmount | currency }}</p>
+        </div>
+  
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit">Confirm Payment</button>
+        </div>
+  
+      </form>
+    </mat-card-content>
+  </mat-card>

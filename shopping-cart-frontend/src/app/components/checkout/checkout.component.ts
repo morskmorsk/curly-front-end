@@ -22,7 +22,7 @@ export class CheckoutComponent {
       (response: any) => {
         console.log('Checkout successful', response);
         this.snackBar.open('Checkout successful!', 'Close', { duration: 3000 });
-        this.router.navigate(['/']);
+        this.router.navigate(['success']);
       },
       (error: any) => {
         console.error('Error during checkout', error);

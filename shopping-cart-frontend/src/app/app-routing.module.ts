@@ -11,6 +11,8 @@ import { AddLocationComponent } from './components/add-location/add-location.com
 import { AddDepartmentComponent } from './components/add-department/add-department.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AdminGuard } from './guards/admin.guard'; // You'll need to create this
+import { PaymentComponent } from './components/payment/payment.component'; // New payment route
+import { SuccessComponent } from './components/success/success.component'; // New success route
 
 
 const routes: Routes = [
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  { path: 'payment', component: PaymentComponent },  // New payment route
+  { path: 'success', component: SuccessComponent },  // New success route
   { path: 'add-location', component: AddLocationComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'add-department', component: AddDepartmentComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuard, AdminGuard] },

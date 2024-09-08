@@ -11,6 +11,22 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  // Get the cart total
+  getCartTotal(): Observable<{ total: number }> {
+    return this.http.get<{ total: number }>(`${environment.apiUrl}/total/`);
+  }
+
+  // Mark the payment as credit card (processed on external terminal)
+  markAsCreditCardPayment(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/payment/credit-card/`, {});  // Adjust URL for backend
+  }
+
+  // Process the cash payment, only send tendered amount
+  processCashPayment(tendered: number): Observable<any> {
+    const body = { tendered_amount: tendered };
+    return this.http.post(`${this.apiUrl}/payment/cash/`, body);  // Adjust URL for backend
+  }
+
   getProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/`);
   }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { PriceOverrideDialogComponent } from '../price-override-dialog/price-override-dialog.component';
+// import { PriceOverrideDialogComponent } from '../price-override-dialog/price-override-dialog.component';
+import { Router } from '@angular/router';
 
 interface CartItem {
   productName: string;
@@ -23,7 +24,8 @@ export class CartComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    // private dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -71,17 +73,18 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
-    this.apiService.checkout().subscribe(
-      (response) => {
-        console.log('Checkout successful', response);
-        this.snackBar.open('Checkout successful', 'Close', { duration: 2000 });
-        this.loadCart(); // Optionally refresh the cart after checkout
-      },
-      (error) => {
-        console.error('Error during checkout', error);
-        this.snackBar.open('Error during checkout', 'Close', { duration: 3000 });
-      }
-    );
+    // this.apiService.checkout().subscribe(
+    //   (response) => {
+    //     console.log('Checkout successful', response);
+    //     this.snackBar.open('Checkout successful', 'Close', { duration: 2000 });
+    //     this.loadCart(); // Optionally refresh the cart after checkout
+    //   },
+    //   (error) => {
+    //     console.error('Error during checkout', error);
+    //     this.snackBar.open('Error during checkout', 'Close', { duration: 3000 });
+    //   }
+    // );
+    this.router.navigate(['/payment']); // Navigate to the payment page
   }
 
   // openPriceOverrideDialog(item: any): void {
