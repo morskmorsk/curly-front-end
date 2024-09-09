@@ -1,0 +1,40 @@
+<div class="device-list-container">
+    <h2>Device List</h2>
+    
+    <!-- Add Device Button -->
+    <button mat-raised-button color="primary" (click)="addDevice()">Add Device</button>
+  
+    <!-- If no devices are found -->
+    <div *ngIf="devices.length === 0" class="no-devices">
+      <p>No devices found. Please add a device!</p>
+    </div>
+  
+    <!-- Device List Table -->
+    <table *ngIf="devices.length > 0" class="device-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Model</th>
+          <th>IMEI</th>
+          <th>Serial Number</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of devices">
+          <td>{{ device.name }}</td>
+          <td>{{ device.device_model }}</td>
+          <td>{{ device.imei }}</td>
+          <td>{{ device.serial_number }}</td>
+          <td>
+            <button mat-icon-button color="primary" (click)="editDevice(device.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteDevice(device.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

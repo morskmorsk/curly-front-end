@@ -1,5 +1,5 @@
+////////////////// Import the new components //////////////////
 // src/app/app-routing.module.ts
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
@@ -13,6 +13,9 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { AdminGuard } from './guards/admin.guard'; // You'll need to create this
 import { PaymentComponent } from './components/payment/payment.component'; // New payment route
 import { SuccessComponent } from './components/success/success.component'; // New success route
+import { DeviceListComponent } from './components/device-list/device-list.component';
+import { AddDeviceComponent } from './components/add-device/add-device.component';
+
 
 
 const routes: Routes = [
@@ -26,6 +29,8 @@ const routes: Routes = [
   { path: 'add-location', component: AddLocationComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'add-department', component: AddDepartmentComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'devices', component: DeviceListComponent, canActivate: [AuthGuard] },
+  { path: 'add-device', component: AddDeviceComponent, canActivate: [AuthGuard] }
 
 ];
 

@@ -16,7 +16,6 @@ import { AddLocationComponent } from './components/add-location/add-location.com
 import { AddDepartmentComponent } from './components/add-department/add-department.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { PaymentComponent } from './components/payment/payment.component';
-
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // Angular Material Modules
