@@ -75,4 +75,70 @@ export class ApiService {
   updatePriceOverride(itemId: number, overridePrice: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/carts/update_price_override/`, { item_id: itemId, override_price: overridePrice });
   }
+
+// ////////////////////////////////////////////
+  addDevice(deviceData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/devices/`, deviceData);
+  }
+
+  addWorkOrder(workOrderData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/work-orders/`, workOrderData);
+  }
+
+  addWorkOrderDevice(workOrderDeviceData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/work-order-devices/`, workOrderDeviceData);
+  }
+
+  addPhoneNumber(phoneNumberData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/phone-numbers/`, phoneNumberData);
+  }
+
+  getWorkOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/work-orders/`);
+  }
+
+  getWorkOrderDevices(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/work-order-devices/`);
+  }
+
+  getPhoneNumbers(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/phone-numbers/`);
+  }
+
+  getDevices(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/devices/`);
+  }
+  
+  updateDevice(deviceData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/devices/${deviceData.id}/`, deviceData);
+  }
+
+  updateWorkOrder(workOrderData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/work-orders/${workOrderData.id}/`, workOrderData);
+  }
+
+  updateWorkOrderDevice(workOrderDeviceData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/work-order-devices/${workOrderDeviceData.id}/`, workOrderDeviceData);
+  }
+
+  updatePhoneNumber(phoneNumberData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/phone-numbers/${phoneNumberData.id}/`, phoneNumberData);
+  }
+
+  updateLocation(locationData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/locations/${locationData.id}/`, locationData);
+  }
+
+  updateDepartment(departmentData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/departments/${departmentData.id}/`, departmentData);
+  }
+
+  updateProduct(productData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/products/${productData.id}/`, productData);
+  }
+
+  deleteDevice(deviceId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/devices/${deviceId}/`);
+  }
 }
+// //////////////////////////////////////////// 
