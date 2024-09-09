@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-// import { PriceOverrideDialogComponent } from '../price-override-dialog/price-override-dialog.component';
 import { Router } from '@angular/router';
 
 interface CartItem {
@@ -24,7 +22,6 @@ export class CartComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private snackBar: MatSnackBar,
-    // private dialog: MatDialog,
     private router: Router,
   ) { }
 
